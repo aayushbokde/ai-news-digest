@@ -11,8 +11,9 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     # Gemini
-    gemini_api_key: str = ""
-
+    #gemini_api_key: str = ""
+    # GROQ
+    groq_api_key: str = ""
     # Database
     database_url: str = "postgresql://postgres:postgres@localhost:5432/ai_news"
 
