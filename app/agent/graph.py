@@ -61,7 +61,7 @@ class PipelineState(TypedDict):
 
 def _get_llm() -> ChatGoogleGenerativeAI:
     return ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
+        model="gemini-2.0-flash",
         google_api_key=settings.gemini_api_key,
         temperature=0.3,
     )
