@@ -89,14 +89,15 @@ def _extract_links(html: str, base_url: str) -> list[str]:
 
     # Paths to skip — not actual news articles
     SKIP_PATTERNS = [
-        "/careers", "/jobs", "/about", "/privacy", "/terms",
-        "/legal", "/security", "/contact", "/support",
-        "/company", "/team", "/events", "/research",
-        "/product", "/pricing", "/login", "/signup",
-        "/claude", "/api", "/newsroom", "/policy",
-        "/constitution", "/transparency", "/index",
-        "/learning", "/education", "/economic-futures",
-    ]
+    "/careers", "/jobs", "/about", "/privacy", "/terms",
+    "/legal", "/security", "/contact", "/support",
+    "/company", "/team", "/events", "/research",
+    "/product", "/pricing", "/login", "/signup",
+    "/claude", "/api", "/newsroom", "/policy",
+    "/constitution", "/transparency", "/index",
+    "/learning", "/education", "/economic-futures",
+    "/economic_futures", "/economicfutures",
+]
 
     for a in soup.find_all("a", href=True):
         href = a["href"].strip()
