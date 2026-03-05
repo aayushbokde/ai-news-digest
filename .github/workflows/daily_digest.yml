@@ -1,0 +1,22 @@
+name: Daily Digest
+
+on:
+  schedule:
+    - cron: '30 4 * * *'  # 10:00 AM IST
+  workflow_dispatch:        # allows manual trigger too
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - run: uv run python main.py --run-now
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }}
+          DIGEST_SENDER_EMAIL: ${{ secrets.DIGEST_SENDER_EMAIL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SCRAPE_WINDOW_HOURS: "24"
