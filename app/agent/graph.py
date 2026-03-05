@@ -18,7 +18,7 @@ import logging
 import uuid
 from typing import Any
 
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import StateGraph, END
 from typing_extensions import TypedDict
@@ -59,10 +59,10 @@ class PipelineState(TypedDict):
 
 # ── LLM factory ───────────────────────────────────────────────────────────────
 
-def _get_llm() -> ChatGoogleGenerativeAI:
-    return ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
-        google_api_key=settings.gemini_api_key,
+def _get_llm() -> ChatGroq:
+    return ChatGroq(
+        model="llama-3.3-70b-versatile",
+        groq_api_key=settings.groq_api_key,
         temperature=0.3,
     )
 
