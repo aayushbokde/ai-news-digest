@@ -62,24 +62,57 @@ def _fetch_html(url: str) -> str | None:
         return None
 
 
+# def _extract_links(html: str, base_url: str) -> list[str]:
+#     """
+#     Extract all <a href> links from HTML that look like blog post URLs.
+#     Returns absolute URLs on the same domain.
+#     """
+#     soup  = BeautifulSoup(html, "lxml")
+#     base  = urlparse(base_url)
+#     links = set()
+
+#     for a in soup.find_all("a", href=True):
+#         href = a["href"].strip()
+#         abs_url = urljoin(base_url, href)
+#         parsed  = urlparse(abs_url)
+
+#         # Keep only same-domain links with a non-trivial path
+#         if parsed.netloc == base.netloc and len(parsed.path) > 1:
+#             # Strip query strings and fragments for deduplication
+#             links.add(parsed._replace(query="", fragment="").geturl())
+
+#     return list(links)
 def _extract_links(html: str, base_url: str) -> list[str]:
-    """
-    Extract all <a href> links from HTML that look like blog post URLs.
-    Returns absolute URLs on the same domain.
-    """
     soup  = BeautifulSoup(html, "lxml")
     base  = urlparse(base_url)
     links = set()
+
+    # Paths to skip — not actual news articles
+    SKIP_PATTERNS = [
+        "/careers", "/jobs", "/about", "/privacy", "/terms",
+        "/legal", "/security", "/contact", "/support",
+        "/company", "/team", "/events", "/research",
+        "/product", "/pricing", "/login", "/signup",
+        "/claude", "/api", "/newsroom", "/policy",
+        "/constitution", "/transparency", "/index",
+        "/learning", "/education", "/economic-futures",
+    ]
 
     for a in soup.find_all("a", href=True):
         href = a["href"].strip()
         abs_url = urljoin(base_url, href)
         parsed  = urlparse(abs_url)
 
-        # Keep only same-domain links with a non-trivial path
-        if parsed.netloc == base.netloc and len(parsed.path) > 1:
-            # Strip query strings and fragments for deduplication
-            links.add(parsed._replace(query="", fragment="").geturl())
+        if parsed.netloc != base.netloc:
+            continue
+        if len(parsed.path) <= 1:
+            continue
+
+        # Skip non-article pages
+        if any(parsed.path.lower().startswith(p) for p in SKIP_PATTERNS):
+            continue
+
+        links.add(parsed._replace(query="", fragment="").geturl())
 
     return list(links)
 
