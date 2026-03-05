@@ -187,7 +187,7 @@ def node_summarise(state: PipelineState) -> PipelineState:
                 prompt = ARTICLE_SUMMARY_PROMPT.format(
                     title=article.title,
                     url=article.url,
-                    content=article.raw_content[:8000],  # cap context
+                    content=article.raw_content[:3000],  # cap context
                 )
                 summary = _llm_call(llm, prompt)
                 article.summary = summary
@@ -227,7 +227,7 @@ def node_build_digest(state: PipelineState) -> PipelineState:
         # Build the article summaries block for the prompt
         article_summaries = "\n\n".join(
             f"**{a.title}**\nURL: {a.url}\nSummary: {a.summary}"
-            for a in articles
+            for a in articles[:20] # cap at 20 articles per digest to avoid token limits
         )
 
         llm    = _get_llm()
