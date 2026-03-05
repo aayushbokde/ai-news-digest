@@ -121,6 +121,10 @@ def _extract_links(html: str, base_url: str) -> list[str]:
         if "anthropic.com" in parsed.netloc:
             if "/news/" not in parsed.path:
                 continue
+        # For openai.com only keep /index/ or specific blog paths
+        if "openai.com" in parsed.netloc:
+            if not any(p in parsed.path for p in ["/blog/", "/research/", "/index/"]):
+                continue
 
         links.add(parsed._replace(query="", fragment="").geturl())
 
