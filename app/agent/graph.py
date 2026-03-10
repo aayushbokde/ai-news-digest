@@ -210,9 +210,14 @@ def node_build_digest(state: PipelineState) -> PipelineState:
     engine = get_engine(settings.database_url)
 
     with get_session(engine) as session:
+        from datetime import datetime, timedelta, timezone
+        cutoff = datetime.now(tz=timezone.utc) - timedelta(hours=26)
         articles = (
             session.query(Article)
-            .filter(Article.status == ArticleStatus.summarised)
+            .filter(
+                Article.status == ArticleStatus.summarised,
+                Article.published_at >= cutoff,
+            )
             .order_by(Article.published_at.desc())
             .limit(50)
             .all()
