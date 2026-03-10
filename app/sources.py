@@ -37,10 +37,10 @@ SOURCES: list[dict] = [
         "source_type": SourceType.blog,
         "url":         "https://www.anthropic.com/news",
     },
-    {
-        "id":          "openai-blog",
-        "name":        "OpenAI Blog",
-        "source_type": SourceType.blog,
-        "url":         "https://openai.com/blog",
-    },
+    # {
+    #     "id":          "openai-blog",
+    #     "name":        "OpenAI Blog",
+    #     "source_type": SourceType.blog,
+    #     "url":         "https://openai.com/blog",
+    # },
 ]
