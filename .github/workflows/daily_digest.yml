@@ -19,4 +19,4 @@ jobs:
           DIGEST_RECIPIENT_EMAIL: ${{ secrets.DIGEST_RECIPIENT_EMAIL }}
           DIGEST_SENDER_EMAIL: ${{ secrets.DIGEST_SENDER_EMAIL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SCRAPE_WINDOW_HOURS: "24"
+          SCRAPE_WINDOW_HOURS: "48"
