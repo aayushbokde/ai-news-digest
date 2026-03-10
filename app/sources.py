@@ -43,4 +43,16 @@ SOURCES: list[dict] = [
     #     "source_type": SourceType.blog,
     #     "url":         "https://openai.com/blog",
     # },
+    {
+    "id":          "deepmind-blog",
+    "name":        "Google DeepMind Blog",
+    "source_type": SourceType.blog,
+    "url":         "https://deepmind.google/discover/blog/",
+    },
+    {
+    "id":          "mistral-blog",
+    "name":        "Mistral Blog",
+    "source_type": SourceType.blog,
+    "url":         "https://mistral.ai/news/",
+    },
 ]
